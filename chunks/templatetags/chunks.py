@@ -11,7 +11,7 @@ def do_chunk(parser, token):
     # split_contents() knows not to split quoted strings.
     tokens = token.split_contents()
     if len(tokens) < 2 or len(tokens) > 3:
-        raise template.TemplateSyntaxError, "%r tag should have either 2 or 3 arguments" % (tokens[0],)
+        raise template.TemplateSyntaxError("%r tag should have either 2 or 3 arguments" % (tokens[0],))
     if len(tokens) == 2:
         tag_name, key = tokens
         cache_time = 0
@@ -41,7 +41,7 @@ class ChunkNode(template.Node):
 def do_get_chunk(parser, token):
     tokens = token.split_contents()
     if len(tokens) != 4 or tokens[2] != 'as':
-        raise template.TemplateSyntaxError, 'Invalid syntax. Usage: {%% %s "key" as varname %%}' % tokens[0]
+        raise template.TemplateSyntaxError('Invalid syntax. Usage: {%% %s "key" as varname %%}' % tokens[0])
     tagname, key, varname = tokens[0], tokens[1], tokens[3]
     key = ensure_quoted_string(key, "Key argument to %r must be in quotes" % tagname)
     return GetChunkNode(key, varname)
@@ -66,7 +66,7 @@ def ensure_quoted_string(string, error_message):
     returns the string without quotes
     '''
     if not (string[0] == string[-1] and string[0] in ('"', "'")):
-        raise template.TemplateSyntaxError, error_message
+        raise template.TemplateSyntaxError(error_message)
     return string[1:-1]
 
 
