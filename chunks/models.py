@@ -20,5 +20,5 @@ class Chunk(models.Model):
         verbose_name = _('chunk')
         verbose_name_plural = _('chunks')
 
-    def __six__(self):
+    def __str__(self):
         return "%s" % (self.key,)
